@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colorful Notes APP</title>
+
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .note { background: #ffffa0; padding: 10px; margin: 5px 0; display: flex; justify-content: space-between; }
+        .note button { background: red; color: white; border: none; cursor: pointer; }
+      </style>
+</head>
+<body>
+    <h2>Notes App</h2>
+    <input type="text" id="search" placeholder="Search Notes...">
+    <br><br>
+    <input id="noteInput" placeholder="Write a note...">
+    <button id="addBtn">Add</button>
+    <div id="notesList"></div>
+
+
+    <script>
+      const noteList=document.getElementById("notesList");
+      const addBtn=document.getElementById("addBtn");
+      const search=document.getElementById("search");
+      const noteInput=document.getElementById("noteInput");
+
+      addBtn.addEventListener("click",()=>{
+
+        const noteText=noteInput.value.trim();
+
+        if(noteText==="") return ;
+
+        const notediv=document.createElement("div");
+        notediv.className="note";
+        notediv.innerHTML=`${noteText} <button>X<button>`;
+
+        notediv.querySelector("button").addEventListener("click",()=>{
+
+            noteList.removeChild(notediv);
+            // console.log("Hello");
+        });
+
+        
+        noteInput.value=""
+        noteList.appendChild(notediv);
+        
+      })
+
+      search.addEventListener("input",()=>{
+      const filter=search.value.toLowerCase();
+      const notes=document.querySelectorAll(".note")
+      notes.forEach((note)=>{
+        const match= note.textContent.toLocaleLowerCase().includes(filter);
+        note.style.display=match?"flex":"none";
+      })
+    
+        
+      })
+
+
+
+    </script>
+</body>
+</html>
